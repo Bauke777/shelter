@@ -13,7 +13,7 @@ module.exports = express()
   .get('/', all)
   /* TODO: Other HTTP methods. */
   // .post('/', add)
-  // .get('/:id', get)
+  .get('/:id', get)
   // .put('/:id', set)
   // .patch('/:id', change)
   // .delete('/:id', remove)
@@ -30,4 +30,29 @@ function all(req, res) {
   //   json: () => res.json(result),
   //   html: () => res.render('list.ejs', Object.assign({}, result, helpers))
   // })
+}
+
+function get(req, res) {
+    var id = req.params.id
+    var has
+
+    try {
+        has = db.has(id)
+    } catch (err) {
+        onerror(400, res)
+    }
+
+    if (has) {
+        var result = {
+            data: db.get(id)
+        }
+        res.format({
+            json: () => res.json(result),
+            html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
+        })
+    } else if (db.removed(id)) {
+        onerror(410, res)
+    } else {
+        onerror(404, res)
+    }
 }
