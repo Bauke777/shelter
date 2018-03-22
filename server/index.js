@@ -36,9 +36,22 @@ function get(req, res) {
 
     var id = req.params.id
 
-    var result = {errors: [], data: db.get(id)}
-
-    res.render('detail.ejs', Object.assign({}, result, helpers))
+    try {
+        if (db.has(id)) {
+            var result = {errors: [], data: db.get(id)}
+            res.format({
+                json: () => res.json(result),
+                html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
+            })
+        } else {
+            var result = {errors: [{id: 404, title: '404', detail: 'Not Found'}]}
+            res.status(404).render('error.ejs', Object.assign({}, result, helpers))
+        }
+    }
+    catch(err) {
+        var result = {errors: [{id: 400, title: '400', detail: 'Bad request'}]}
+        res.status(400).render('error.ejs', Object.assign({}, result, helpers))
+        return
+    }
     
-
 }
