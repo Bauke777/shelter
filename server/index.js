@@ -70,12 +70,12 @@ function remove(req, res) {
             res.json(result)
         } else {
             var result = {errors: [{id: 404, title: '404', detail: 'Not Found'}]}
-            res.status(404).render('error.ejs', Object.assign({}, result, helpers))
+            res.json(result)
         }
     }
     catch(err) {
         var result = {errors: [{id: 400, title: '400', detail: 'Bad request'}]}
-        res.status(400).render('error.ejs', Object.assign({}, result, helpers))
+        res.json(result)
         return
     }
 
