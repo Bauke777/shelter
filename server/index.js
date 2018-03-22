@@ -22,14 +22,11 @@ module.exports = express()
 function all(req, res) {
 
     var result = {errors: [], data: db.all()}
-
-    res.render('list.ejs', Object.assign({}, result, helpers))
-
-    /* Support both a request for JSON and a request for HTML  */
-    // res.format({
-    //   json: () => res.json(result),
-    //   html: () => res.render('list.ejs', Object.assign({}, result, helpers))
-    // })
+    
+    res.format({
+      json: () => res.json(result),
+      html: () => res.render('list.ejs', Object.assign({}, result, helpers))
+    })
 }
 
 function get(req, res) {
@@ -37,13 +34,16 @@ function get(req, res) {
     var id = req.params.id
 
     try {
+        // If id is availible in the database, render as JSON or HTML
         if (db.has(id)) {
             var result = {errors: [], data: db.get(id)}
             res.format({
                 json: () => res.json(result),
                 html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
             })
-        } else {
+        }
+        // If id is not in the database give
+        else {
             var result = {errors: [{id: 404, title: '404', detail: 'Not Found'}]}
             res.status(404).render('error.ejs', Object.assign({}, result, helpers))
         }
@@ -53,5 +53,5 @@ function get(req, res) {
         res.status(400).render('error.ejs', Object.assign({}, result, helpers))
         return
     }
-    
+
 }
