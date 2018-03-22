@@ -19,17 +19,19 @@ module.exports = express()
   .delete('/:id', remove)
   .listen(1902)
 
+// Get home page with all animals
 function all(req, res) {
 
     var result = {errors: [], data: db.all()}
 
     res.format({
-      json: () => res.json(result),
-      html: () => res.render('list.ejs', Object.assign({}, result, helpers))
+        json: () => res.json(result),
+        html: () => res.render('list.ejs', Object.assign({}, result, helpers))
     })
 
 }
 
+// Get detail page for specific animal
 function get(req, res) {
 
     var id = req.params.id
@@ -58,6 +60,7 @@ function get(req, res) {
 
 }
 
+// Function for removing animals
 function remove(req, res) {
 
     var id = req.params.id
