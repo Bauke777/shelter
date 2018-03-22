@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Add a new animal</title>
+        <link rel="stylesheet" href="/index.css">
+    </head>
+    <body>
+
+        <main class="container">
+            <h1>Add a new animal</h1>
+            <form action="/" method="post">
+
+                <label for="name">Name</label>
+                <input type="text" name="name" value="Animal's name">
+
+                <label><input type="radio" id="type" name="type" value="cat" checked>Cat</label>
+                <label><input type="radio" id="type" name="type" value="dog">Dog</label>
+                <label><input type="radio" id="type" name="type" value="rabbit">Rabbit</label>
+
+                <label for="description">Description</label>
+                <textarea type="text" name="description" placeholder="Insert description"></textarea>
+
+                <label><input type="radio" id="type" name="place" value="Brooklyn Animal Care Center" checked="checked">Brooklyn Animal Care Center</label>
+                <label><input type="radio" id="type" name="place" value="Manhattan Animal Care Center">Manhattan Animal Care Center</label>
+                <label><input type="radio" id="type" name="place" value="Staten Island Animal Care Center">Staten Island Animal Care Center</label>
+
+                <label for="intake">Intake</label>
+                <input type="date" name="intake" value="2017-12-13">
+
+                <label><input type="radio" value="female" name="sex" checked>female</label>
+                <label><input type="radio" value="male" name="sex">male</label>
+
+                <label><input type="number" value="10" name="age">Age</label>
+
+                <label><input type="number" name="weight" value="12" step="any">Weight</label>
+
+                <label><input type="radio" id="length" name="length" value="short" checked>Short</label>
+                <label><input type="radio" id="length" name="length" value="medium">Medium</label>
+                <label><input type="radio" id="length" name="length" value="long">Long</label>
+
+                <br>
+                <label><input type="radio" name="coat" value="smooth" checked>Smooth</label>
+                <label><input type="radio" name="coat" value="thick">Thick</label>
+
+                <!--// VACCINATED TRUE-->
+                <label><input type="checkbox" value="true" name="vaccinated">Vaccinated</label>
+
+                <!--// DECLAWED TRUE-->
+                <label><input type="checkbox" value="true" name="declawed">Declawed</label>
+
+                <label><input type="text" name="primaryColor" value="red">Primary color</label>
+
+                <label><input type="text" name="secondaryColor" value="blue">Secondary color</label>
+
+                <button>Submit</button>
+            </form>
+        </main>
+
+    </body>
+</html>
