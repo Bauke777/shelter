@@ -3,6 +3,7 @@
 var express = require('express')
 var db = require('../db')
 var helpers = require('./helpers')
+var bodyParser = require('body-parser')
 
 module.exports = express()
   .set('view engine', 'ejs')
@@ -10,12 +11,14 @@ module.exports = express()
   .use(express.static('static'))
   .use('/image', express.static('db/image'))
   .get('/', all)
-  /* TODO: Other HTTP methods. */
-  // .post('/', add)
-  .get('/:id', get)
+
+  /* Other HTTP methods. */
+  .post('/', add)
+  .get('/add', form) // Render form
+  .get('/:id', get) // Get animal's details
   // .put('/:id', set)
   // .patch('/:id', change)
-  .delete('/:id', remove)
+  .delete('/:id', remove) // Remove animal
   .listen(1902)
 
 // Get home page with all animals
@@ -44,6 +47,11 @@ function get(req, res) {
                 html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
             })
         }
+        // If id did exist before but has been removed
+        else if (db.removed(id)) {
+            var result = {errors: [{id: 410, title: '410', detail: 'Gone'}]}
+            res.status(410).render('error.ejs', Object.assign({}, result, helpers))
+        }
         // If id is not in the database give
         else {
             var result = {errors: [{id: 404, title: '404', detail: 'Not Found'}]}
@@ -56,6 +64,19 @@ function get(req, res) {
         res.status(400).render('error.ejs', Object.assign({}, result, helpers))
         return
     }
+
+}
+
+// Render form
+function form(req, res) {
+
+    res.render('form.ejs')
+
+}
+
+function add(req, res) {
+
+    console.log("adding");
 
 }
 
