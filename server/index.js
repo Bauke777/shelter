@@ -76,7 +76,8 @@ function form(req, res) {
 
 function add(req, res) {
 
-    console.log("adding");
+    if (!req.body) return res.sendStatus(400)
+    res.send('welcome, ' + req.body.name)
 
 }
 
