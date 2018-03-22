@@ -39,5 +39,6 @@ function get(req, res) {
     var result = {errors: [], data: db.get(id)}
 
     res.render('detail.ejs', Object.assign({}, result, helpers))
+    
 
 }
