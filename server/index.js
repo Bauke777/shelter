@@ -20,39 +20,24 @@ module.exports = express()
   .listen(1902)
 
 function all(req, res) {
-  var result = {errors: [], data: db.all()}
 
-  /* Use the following to support just HTML:  */
-  res.render('list.ejs', Object.assign({}, result, helpers))
+    var result = {errors: [], data: db.all()}
 
-  /* Support both a request for JSON and a request for HTML  */
-  // res.format({
-  //   json: () => res.json(result),
-  //   html: () => res.render('list.ejs', Object.assign({}, result, helpers))
-  // })
+    res.render('list.ejs', Object.assign({}, result, helpers))
+
+    /* Support both a request for JSON and a request for HTML  */
+    // res.format({
+    //   json: () => res.json(result),
+    //   html: () => res.render('list.ejs', Object.assign({}, result, helpers))
+    // })
 }
 
 function get(req, res) {
+
     var id = req.params.id
-    var has
 
-    try {
-        has = db.has(id)
-    } catch (err) {
-        onerror(400, res)
-    }
+    var result = {errors: [], data: db.get(id)}
 
-    if (has) {
-        var result = {
-            data: db.get(id)
-        }
-        res.format({
-            json: () => res.json(result),
-            html: () => res.render('detail.ejs', Object.assign({}, result, helpers))
-        })
-    } else if (db.removed(id)) {
-        onerror(410, res)
-    } else {
-        onerror(404, res)
-    }
+    res.render('detail.ejs', Object.assign({}, result, helpers))
+
 }

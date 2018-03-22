@@ -15,8 +15,11 @@
     "view"
   ],
   "dependencies": {
+    "body-parser": "^1.18.2",
     "ejs": "^2.5.7",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "path": "^0.12.7",
+    "slug": "^0.9.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
