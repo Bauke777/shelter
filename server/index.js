@@ -86,7 +86,7 @@ function add(req, res) {
     }
     catch(err) {
         var result = {errors: [{id: 422, title: '422', detail: 'Unprocessable Entity'}]}
-        res.json(result)
+        res.status(422).render('error.ejs', Object.assign({}, result, helpers))
         return
     }
 
@@ -104,7 +104,7 @@ function checkForm(form) {
     }
     catch(err) {
         var result = {errors: [{id: 422, title: '422', detail: 'Unprocessable Entity'}]}
-        res.json(result)
+        res.status(422).render('error.ejs', Object.assign({}, result, helpers))
         return
     }
 
