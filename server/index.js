@@ -80,11 +80,17 @@ function form(req, res) {
 
 function add(req, res) {
 
-    console.log(req.body)
+    try {
+        checkForm(req.body)
+        db.add(req.body)
+    }
+    catch(err) {
+        var result = {errors: [{id: 422, title: '422', detail: 'Unprocessable Entity'}]}
+        res.json(result)
+        return
+    }
 
-    checkForm(req.body)
-
-    res.send('Added ' + req.body.name + 'to the database')
+    res.redirect('/')
 
 }
 
