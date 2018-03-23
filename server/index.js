@@ -6,20 +6,24 @@ var helpers = require('./helpers')
 var bodyParser = require('body-parser')
 
 module.exports = express()
-  .set('view engine', 'ejs')
-  .set('views', 'view')
-  .use(express.static('static'))
-  .use('/image', express.static('db/image'))
-  .get('/', all)
+    .set('view engine', 'ejs')
+    .set('views', 'view')
+    .use(express.static('static'))
+    .use('/image', express.static('db/image'))
+    .use(bodyParser.urlencoded({
+        extended: false
+    }))
+    .use(bodyParser.json())
+    .get('/', all)
 
-  /* Other HTTP methods. */
-  .post('/', add)
-  .get('/add', form) // Render form
-  .get('/:id', get) // Get animal's details
-  // .put('/:id', set)
-  // .patch('/:id', change)
-  .delete('/:id', remove) // Remove animal
-  .listen(1902)
+    /* Other HTTP methods. */
+    .post('/', add)
+    .get('/add', form) // Render form
+    .get('/:id', get) // Get animal's details
+    // .put('/:id', set)
+    // .patch('/:id', change)
+    .delete('/:id', remove) // Remove animal
+    .listen(1902)
 
 // Get home page with all animals
 function all(req, res) {
@@ -76,8 +80,27 @@ function form(req, res) {
 
 function add(req, res) {
 
-    if (!req.body) return res.sendStatus(400)
-    res.send('welcome, ' + req.body.name)
+    console.log(req.body)
+
+    checkForm(req.body)
+
+    res.send('Added ' + req.body.name + 'to the database')
+
+}
+
+function checkForm(form) {
+
+    try {
+        form.vaccinated = Boolean(form.vaccinated)
+        form.declawed = Boolean(form.declawed)
+        form.age = Number(form.age)
+        form.weight = Number(form.weight)
+    }
+    catch(err) {
+        var result = {errors: [{id: 422, title: '422', detail: 'Unprocessable Entity'}]}
+        res.json(result)
+        return
+    }
 
 }
 
